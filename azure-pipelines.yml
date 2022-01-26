@@ -113,25 +113,25 @@ stages:
         allowPackageConflicts: true
       condition: succeeded()
 
-- stage: 'Deploy'
-  displayName: 'Deploy the web application'
-  dependsOn: Build
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'ubuntu-20.04'
-    environment: dev
-    variables:
-    - group: Release
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: current
-            artifact: drop
-          - task: AzureWebApp@1
-            displayName: 'Azure App Service Deploy: website'
-            inputs:
-              azureSubscription: 'demodevopslinux'
-              appName: '$(WebAppName)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+# - stage: 'Deploy'
+#   displayName: 'Deploy the web application'
+#   dependsOn: Build
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'ubuntu-20.04'
+#     environment: dev
+#     variables:
+#     - group: Release
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - download: current
+#             artifact: drop
+#           - task: AzureWebApp@1
+#             displayName: 'Azure App Service Deploy: website'
+#             inputs:
+#               azureSubscription: 'demodevopslinux'
+#               appName: '$(WebAppName)'
+#               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
